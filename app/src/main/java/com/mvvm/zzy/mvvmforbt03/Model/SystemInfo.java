@@ -25,7 +25,7 @@ public class SystemInfo extends BaseObservable{
 
     public void setOpen(boolean open) {
         this.open = open;
-        notifyPropertyChanged(BR.open);
+        notifyPropertyChanged(BR.systemInfo);
     }
 
     @Bindable
@@ -35,6 +35,6 @@ public class SystemInfo extends BaseObservable{
 
     public void setSearch(boolean search) {
         this.search = search;
-        notifyPropertyChanged(BR.search);
+        notifyPropertyChanged(BR.systemInfo);
     }
 }

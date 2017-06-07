@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="/Users/zhangziyu/Documents/Procedure/AndroidStudio/MvvmForBt03/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="12920f9016b8b05acbc2af7cdc13cef6946fe7d3">
+        <dex dex="/Users/zhangziyu/Documents/Procedure/AndroidStudio/MvvmForBt03/app/build/intermediates/pre-dexed/debug/instant-run_b6e83b62234a01b1b43c5dc61f42cf9aef2f020e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/zhangziyu/Documents/Procedure/AndroidStudio/MvvmForBt03/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="4e58dca665c9557b8ed2b9e765b63009de610335">
+        <dex dex="/Users/zhangziyu/Documents/Procedure/AndroidStudio/MvvmForBt03/app/build/intermediates/pre-dexed/debug/instant-run-bootstrap_2565605a17c3605595e44bdfe3d07e07b32782d1.jar" />
+    </item>
+
+</items>

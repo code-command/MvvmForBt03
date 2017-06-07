@@ -1,6 +1,9 @@
 package com.mvvm.zzy.mvvmforbt03.ViewModel;
 
+import android.bluetooth.BluetoothAdapter;
 import android.view.View;
+
+import com.mvvm.zzy.mvvmforbt03.Model.SystemInfo;
 
 /**
  * Created by Administrator on 2017/6/6 0006.
@@ -8,7 +11,19 @@ import android.view.View;
 
 public class SearchButtonViewModel{
 
-    public void searchButtonChangedListener(View view) {
+    private BluetoothAdapter btAdapter;
 
+    public SearchButtonViewModel(BluetoothAdapter btAdapter) {
+        this.btAdapter = btAdapter;
+    }
+
+    public void searchButtonChangedListener(View view) {
+        if (!btAdapter.isEnabled())
+            return;
+        if (btAdapter.isDiscovering()) {
+            btAdapter.cancelDiscovery();
+        } else {
+            btAdapter.startDiscovery();
+        }
     }
 }

@@ -85,7 +85,7 @@ public class BtActivity extends AppCompatActivity {
 
     private void initBinding() {
         switchButtonViewModel = new SwitchButtonViewModel(btAdapter);
-        searchButtonViewModel = new SearchButtonViewModel();
+        searchButtonViewModel = new SearchButtonViewModel(btAdapter);
 
         binding = DataBindingUtil.setContentView(BtActivity.this, R.layout.activity_bt);
         binding.setSystemInfo(systemInfo);
