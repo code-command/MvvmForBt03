@@ -12,10 +12,22 @@ import com.mvvm.zzy.mvvmforbt03.BR;
 public class SystemInfo extends BaseObservable{
     private boolean open;
     private boolean search;
+    private boolean found;
 
-    public SystemInfo(boolean open, boolean search) {
-        this.open = open;
-        this.search = search;
+    public boolean isFound() {
+        return found;
+    }
+
+    public void setFound(boolean found) {
+        this.found = found;
+        notifyPropertyChanged(BR.systemInfo);
+    }
+
+    public SystemInfo() {
+        this.open = false;
+        this.search = false;
+        this.found = false;
+
     }
 
     @Bindable

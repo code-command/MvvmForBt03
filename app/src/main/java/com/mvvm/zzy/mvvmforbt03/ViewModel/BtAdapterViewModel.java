@@ -3,7 +3,10 @@ package com.mvvm.zzy.mvvmforbt03.ViewModel;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 
+import com.mvvm.zzy.mvvmforbt03.Model.BtDeviceItem;
 import com.mvvm.zzy.mvvmforbt03.Model.SystemInfo;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/6/6 0006.
@@ -12,10 +15,12 @@ import com.mvvm.zzy.mvvmforbt03.Model.SystemInfo;
 public class BtAdapterViewModel {
     private BluetoothAdapter btAdapter;
     private SystemInfo systemInfo;
+    private List<BtDeviceItem> list;
 
-    public BtAdapterViewModel(BluetoothAdapter btAdapter, SystemInfo systemInfo) {
+    public BtAdapterViewModel(BluetoothAdapter btAdapter, SystemInfo systemInfo, List<BtDeviceItem> list) {
         this.btAdapter = btAdapter;
         this.systemInfo = systemInfo;
+        this.list = list;
     }
 
     public void processIntentChanged(Intent intent) {

@@ -5,6 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
+        <import type="android.widget.LinearLayout"/>
+
         <variable
             name="systemInfo"
             type="com.mvvm.zzy.mvvmforbt03.Model.SystemInfo"/>
@@ -29,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:id="@+id/ll_control_btn"
-            android:orientation="vertical" >
+            android:orientation="@{systemInfo.found ? LinearLayout.HORIZONTAL : LinearLayout.VERTICAL}" >
 
             <Button
                 android:id="@+id/btn_switch_BT"
@@ -51,6 +54,25 @@
                 android:onClick="@{searchButton.searchButtonChangedListener}"
                 android:background="@drawable/button_selector"/>
         </LinearLayout>
+
+        <ListView
+            android:id="@+id/lv_show_dev"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:headerDividersEnabled="true"
+            android:footerDividersEnabled="true"
+            android:layout_below="@+id/ll_control_btn"
+            android:layout_marginTop="80dp"
+            android:layout_centerHorizontal="true"
+            android:visibility="@{systemInfo.found ? View.VISIBLE : View.GONE}"
+            android:cacheColorHint="#00000000"
+            android:centerColor="#ffffff"
+            android:divider="#a1a3a6"
+            android:dividerHeight="1dp"
+            android:fadeScrollbars="true"
+            android:choiceMode="singleChoice"
+            >
+        </ListView>
 
     </RelativeLayout>
 </layout>

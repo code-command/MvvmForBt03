@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.mvvm.zzy.mvvmforbt03.Model.BtDeviceItem;
 import com.mvvm.zzy.mvvmforbt03.Model.SystemInfo;
 import com.mvvm.zzy.mvvmforbt03.R;
 import com.mvvm.zzy.mvvmforbt03.ViewModel.BtReceiver;
@@ -15,6 +16,9 @@ import com.mvvm.zzy.mvvmforbt03.ViewModel.BtReceiverUpdataListener;
 import com.mvvm.zzy.mvvmforbt03.ViewModel.SearchButtonViewModel;
 import com.mvvm.zzy.mvvmforbt03.ViewModel.SwitchButtonViewModel;
 import com.mvvm.zzy.mvvmforbt03.databinding.ActivityBtBinding;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BtActivity extends AppCompatActivity {
 
@@ -26,6 +30,7 @@ public class BtActivity extends AppCompatActivity {
     private BluetoothAdapter btAdapter;
     private BluetoothDevice btDevice;
     private ActivityBtBinding binding;
+    private List<BtDeviceItem> deviceList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +48,8 @@ public class BtActivity extends AppCompatActivity {
     }
 
     private void initParameters() {
-        systemInfo = new SystemInfo(false, false);
+        systemInfo = new SystemInfo();
+        deviceList = new ArrayList<>();
         initBtAdapter();
         initBtReceiver();
     }
@@ -61,7 +67,7 @@ public class BtActivity extends AppCompatActivity {
     }
 
     private void initBtReceiver() {
-        btReceiver = new BtReceiver(btAdapter, systemInfo);
+        btReceiver = new BtReceiver(btAdapter, systemInfo, deviceList);
         registerIntentFilter();
         registerReceiver(btReceiver, btFilter);
         btReceiver.setUpdataListener(new BtReceiverUpdataListener() {
