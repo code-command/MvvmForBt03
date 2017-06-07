@@ -11,13 +11,14 @@ import android.widget.Toast;
 import com.mvvm.zzy.mvvmforbt03.Model.SystemInfo;
 import com.mvvm.zzy.mvvmforbt03.R;
 import com.mvvm.zzy.mvvmforbt03.ViewModel.BtReceiver;
+import com.mvvm.zzy.mvvmforbt03.ViewModel.BtReceiverUpdataListener;
 import com.mvvm.zzy.mvvmforbt03.ViewModel.SearchButtonViewModel;
 import com.mvvm.zzy.mvvmforbt03.ViewModel.SwitchButtonViewModel;
 import com.mvvm.zzy.mvvmforbt03.databinding.ActivityBtBinding;
 
 public class BtActivity extends AppCompatActivity {
 
-    public SystemInfo systemInfo;
+    private SystemInfo systemInfo;
     private SwitchButtonViewModel switchButtonViewModel;
     private SearchButtonViewModel searchButtonViewModel;
     private BtReceiver btReceiver;
@@ -42,7 +43,7 @@ public class BtActivity extends AppCompatActivity {
     }
 
     private void initParameters() {
-        systemInfo = SystemInfo.getSystemInfo();
+        systemInfo = new SystemInfo(false, false);
         initBtAdapter();
         initBtReceiver();
     }
@@ -60,10 +61,16 @@ public class BtActivity extends AppCompatActivity {
     }
 
     private void initBtReceiver() {
-        btReceiver = new BtReceiver(btAdapter);
+        btReceiver = new BtReceiver(btAdapter, systemInfo);
         registerIntentFilter();
         registerReceiver(btReceiver, btFilter);
-
+        btReceiver.setUpdataListener(new BtReceiverUpdataListener() {
+            @Override
+            public void updataSystemInfo(SystemInfo info) {
+                systemInfo.setOpen(info.isOpen());
+                systemInfo.setSearch(info.isSearch());
+            }
+        });
     }
 
     private void registerIntentFilter() {
@@ -81,7 +88,7 @@ public class BtActivity extends AppCompatActivity {
         searchButtonViewModel = new SearchButtonViewModel();
 
         binding = DataBindingUtil.setContentView(BtActivity.this, R.layout.activity_bt);
-        binding.setSystemInfo(SystemInfo.getSystemInfo());
+        binding.setSystemInfo(systemInfo);
         binding.setSwitchButton(switchButtonViewModel);
         binding.setSearchButton(searchButtonViewModel);
     }

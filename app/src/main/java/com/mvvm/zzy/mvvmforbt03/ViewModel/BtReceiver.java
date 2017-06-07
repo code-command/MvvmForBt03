@@ -22,18 +22,18 @@ public class BtReceiver extends BroadcastReceiver {
 
     BtReceiverUpdataListener updataListener;
 
-    public BtReceiver(BluetoothAdapter btAdapter) {
+    public BtReceiver(BluetoothAdapter btAdapter, SystemInfo systemInfo) {
         this.btAdapter = btAdapter;
-        this.systemInfo = SystemInfo.getSystemInfo();
+        this.systemInfo = systemInfo;
 
-        btAdapterViewModel = new BtAdapterViewModel(btAdapter);
+        btAdapterViewModel = new BtAdapterViewModel(btAdapter, systemInfo);
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
         btAdapterViewModel.processIntentChanged(intent);
 
-        updataListener.updataSystemInfo(SystemInfo.getSystemInfo());
+        updataListener.updataSystemInfo(systemInfo);
     }
 
     public void setUpdataListener(BtReceiverUpdataListener updataListener) {

@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
-                android:text="@{systemInfo.isOpen ? @string/close_bt : @string/open_bt}"
+                android:text="@{systemInfo.open ? @string/close_bt : @string/open_bt}"
                 android:background="@drawable/button_selector"
                 android:onClick="@{switchButton.switchButtonChangedListener}"/>
             <Button
@@ -47,7 +47,7 @@
                 android:layout_marginTop="30dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
-                android:text="@{systemInfo.isSearch ? @string/stop_search : @string/start_search}"
+                android:text="@{systemInfo.search ? @string/stop_search : @string/start_search}"
                 android:onClick="@{searchButton.searchButtonChangedListener}"
                 android:background="@drawable/button_selector"/>
         </LinearLayout>

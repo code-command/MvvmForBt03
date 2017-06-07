@@ -11,11 +11,11 @@ import com.mvvm.zzy.mvvmforbt03.Model.SystemInfo;
 
 public class BtAdapterViewModel {
     private BluetoothAdapter btAdapter;
-    SystemInfo systemInfo;
+    private SystemInfo systemInfo;
 
-    public BtAdapterViewModel(BluetoothAdapter btAdapter) {
+    public BtAdapterViewModel(BluetoothAdapter btAdapter, SystemInfo systemInfo) {
         this.btAdapter = btAdapter;
-        systemInfo = SystemInfo.getSystemInfo();
+        this.systemInfo = systemInfo;
     }
 
     public void processIntentChanged(Intent intent) {
