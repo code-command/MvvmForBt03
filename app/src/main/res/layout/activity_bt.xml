@@ -7,6 +7,7 @@
     <data>
         <import type="android.view.View" />
         <import type="android.widget.LinearLayout"/>
+        <import type="android.view.Gravity"/>
 
         <variable
             name="systemInfo"

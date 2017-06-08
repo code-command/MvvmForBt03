@@ -23,6 +23,7 @@ public class BtReceiver extends BroadcastReceiver {
     private List<BtDeviceItem> deviceList;
 
     private BtAdapterViewModel btAdapterViewModel;
+    private BtDeviceViewModel btDeviceViewModel;
 
     BtReceiverUpdataListener updataListener;
 
@@ -32,13 +33,17 @@ public class BtReceiver extends BroadcastReceiver {
         this.deviceList = deviceList;
 
         btAdapterViewModel = new BtAdapterViewModel(btAdapter, systemInfo, deviceList);
+        btDeviceViewModel = new BtDeviceViewModel(deviceList, systemInfo);
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        btAdapterViewModel.processIntentChanged(intent);
+        if (btAdapterViewModel.processIntentChanged(intent))
+            updataListener.updataSystemInfo(systemInfo);
 
-        updataListener.updataSystemInfo(systemInfo);
+        if (btDeviceViewModel.processIntentChanged(intent)) {
+            updataListener.updataBtDeviceList(systemInfo, deviceList);
+        }
     }
 
     public void setUpdataListener(BtReceiverUpdataListener updataListener) {

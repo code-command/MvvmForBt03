@@ -23,27 +23,32 @@ public class BtAdapterViewModel {
         this.list = list;
     }
 
-    public void processIntentChanged(Intent intent) {
-        processIntChanged(intent);
-        processActionChanged(intent);
+    public boolean processIntentChanged(Intent intent) {
+        boolean result = false;
+        if (processIntChanged(intent))
+            result = true;
+        if (processActionChanged(intent))
+            result = true;
+        return true;
     }
 
-    private void processIntChanged(Intent intent) {
+    private boolean processIntChanged(Intent intent) {
         int temp = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1);
         switch (temp) {
             case BluetoothAdapter.STATE_ON:
             case BluetoothAdapter.STATE_TURNING_ON:
                 btAdapterStateOn();
-                break;
+                return true;
 
             case BluetoothAdapter.STATE_OFF:
             case BluetoothAdapter.STATE_TURNING_OFF:
                 btAdapterOff();
-                break;
+                return true;
 
             default:
                 break;
         }
+        return false;
     }
 
     private void btAdapterStateOn() {
@@ -52,24 +57,26 @@ public class BtAdapterViewModel {
 
     private void btAdapterOff() {
         systemInfo.setOpen(false);
+        systemInfo.setFound(false);
+        if (btAdapter.isDiscovering()) {
+            btAdapter.cancelDiscovery();
+        }
     }
 
-    private void processActionChanged(Intent intent) {
+    private boolean processActionChanged(Intent intent) {
         switch (intent.getAction()) {
             case BluetoothAdapter.ACTION_DISCOVERY_STARTED:
                 btAdapter_DISCOVERY_STARTED();
-                break;
+                return true;
 
             case BluetoothAdapter.ACTION_DISCOVERY_FINISHED:
                 btAdapter_DISCOVERY_FINISHED();
-                break;
-
-            case BluetoothAdapter.EXTRA_CONNECTION_STATE:
-                break;
+                return true;
 
             default:
                 break;
         }
+        return false;
     }
 
     private void btAdapter_DISCOVERY_STARTED() {

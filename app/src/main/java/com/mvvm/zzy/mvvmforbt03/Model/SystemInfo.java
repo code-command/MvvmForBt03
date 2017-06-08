@@ -14,13 +14,14 @@ public class SystemInfo extends BaseObservable{
     private boolean search;
     private boolean found;
 
+    @Bindable
     public boolean isFound() {
         return found;
     }
 
     public void setFound(boolean found) {
         this.found = found;
-        notifyPropertyChanged(BR.systemInfo);
+        notifyPropertyChanged(BR.found);
     }
 
     public SystemInfo() {
@@ -37,7 +38,7 @@ public class SystemInfo extends BaseObservable{
 
     public void setOpen(boolean open) {
         this.open = open;
-        notifyPropertyChanged(BR.systemInfo);
+        notifyPropertyChanged(BR.open);
     }
 
     @Bindable
@@ -47,6 +48,33 @@ public class SystemInfo extends BaseObservable{
 
     public void setSearch(boolean search) {
         this.search = search;
-        notifyPropertyChanged(BR.systemInfo);
+        notifyPropertyChanged(BR.search);
+    }
+
+    public void setSystemInfo(SystemInfo info) {
+        this.open = info.isOpen();
+        this.search = info.isSearch();
+        this.found = info.isFound();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SystemInfo that = (SystemInfo) o;
+
+        if (open != that.open) return false;
+//        if (search != that.search) return false;
+        return search == that.search;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (open ? 1 : 0);
+        result = 31 * result + (search ? 1 : 0);
+        result = 31 * result + (found ? 1 : 0);
+        return result;
     }
 }

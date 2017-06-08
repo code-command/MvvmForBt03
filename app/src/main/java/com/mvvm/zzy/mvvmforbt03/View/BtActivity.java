@@ -28,7 +28,6 @@ public class BtActivity extends AppCompatActivity {
     private BtReceiver btReceiver;
     private IntentFilter btFilter;
     private BluetoothAdapter btAdapter;
-    private BluetoothDevice btDevice;
     private ActivityBtBinding binding;
     private List<BtDeviceItem> deviceList;
 
@@ -73,10 +72,27 @@ public class BtActivity extends AppCompatActivity {
         btReceiver.setUpdataListener(new BtReceiverUpdataListener() {
             @Override
             public void updataSystemInfo(SystemInfo info) {
-                systemInfo.setOpen(info.isOpen());
-                systemInfo.setSearch(info.isSearch());
+                systemInfo.setSystemInfo(info);
+
+                if (!info.isOpen()) {
+                    deviceList.clear();
+                }
+            }
+
+            @Override
+            public void updataBtDeviceList(SystemInfo systemInfo, List<BtDeviceItem> list) {
+                systemInfo.setSystemInfo(systemInfo);
+                updataDeviceList(list);
             }
         });
+    }
+
+    private void updataDeviceList(List<BtDeviceItem> list) {
+        if (list == null || list.isEmpty())
+            return;
+        if (deviceList.contains(list.get(0))) {
+            deviceList.set(deviceList.indexOf(list.get(0)), list.get(0));
+        }
     }
 
     private void registerIntentFilter() {
