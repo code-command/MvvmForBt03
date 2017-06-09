@@ -1,4 +1,4 @@
-package com.mvvm.zzy.mvvmforbt03.ViewModel;
+package com.mvvm.zzy.mvvmforbt03.Model;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -11,18 +11,16 @@ import android.widget.BaseAdapter;
 import java.util.List;
 
 /**
- * Created by zhangziyu on 2017/6/7.
+ * Created by Administrator on 2017/6/9 0009.
  */
 
-public class DeviceAdapter<T> extends BaseAdapter {
-    private Context context;
+public class DeviceListAdapter<T> extends BaseAdapter {
     private LayoutInflater inflater;
     private int layoutId;
     private int variableId;
     private List<T> list;
 
-    public DeviceAdapter(Context context, int layoutId, int variableId, List<T> list) {
-        this.context = context;
+    public DeviceListAdapter(Context context, int layoutId, int variableId, List<T> list) {
         this.inflater = LayoutInflater.from(context);
         this.layoutId = layoutId;
         this.variableId = variableId;
@@ -31,10 +29,10 @@ public class DeviceAdapter<T> extends BaseAdapter {
 
     public void clearList() {
         list.clear();
-        this.notifyDataSetChanged();
+        notifyDataSetChanged();
     }
 
-    public void updataListItem(T item) {
+    public void updateList(T item) {
         if (list.contains(item)) {
             int postion = list.indexOf(item);
             list.remove(postion);
@@ -42,11 +40,11 @@ public class DeviceAdapter<T> extends BaseAdapter {
         } else {
             list.add(item);
         }
-        this.notifyDataSetChanged();
+        notifyDataSetChanged();
     }
 
-    public List<T> getList () {
-        return  list;
+    public List<T> getList() {
+        return list;
     }
 
     @Override

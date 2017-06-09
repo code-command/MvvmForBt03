@@ -8,8 +8,7 @@ import java.lang.reflect.Method;
  * Created by Administrator on 2017/6/9 0009.
  */
 
-public class BlueTooth_Auto_Pair {
-
+public class BtPairing {
     /**************************与蓝牙设备配对**************************/
     public static boolean creatBond(Class<? extends BluetoothDevice> btClass, BluetoothDevice btDevice)throws Exception
     {

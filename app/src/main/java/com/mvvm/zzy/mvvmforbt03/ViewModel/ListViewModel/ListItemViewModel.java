@@ -1,44 +1,44 @@
-package com.mvvm.zzy.mvvmforbt03.ViewModel;
+package com.mvvm.zzy.mvvmforbt03.ViewModel.ListViewModel;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.mvvm.zzy.mvvmforbt03.Model.BlueTooth_Auto_Pair;
 import com.mvvm.zzy.mvvmforbt03.Model.BtDeviceItem;
-import com.mvvm.zzy.mvvmforbt03.View.DataTransmissionActivity;
+import com.mvvm.zzy.mvvmforbt03.Model.BtPairing;
+import com.mvvm.zzy.mvvmforbt03.Model.DeviceListAdapter;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zhangziyu on 2017/6/7.
  */
 
 public class ListItemViewModel implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener{
-    private Context context;
     private BluetoothAdapter btAdapter;
     private List<BtDeviceItem> deviceList;
-    private DeviceAdapter deviceAdapter;
 
     private ListItemViewUpdata listItemViewUpdata;
+    private NewProgressCreation newProgressCreation;
 
-    public ListItemViewModel(Context context, BluetoothAdapter btAdapter, DeviceAdapter deviceAdapter) {
-        this.context = context;
+    public ListItemViewModel(BluetoothAdapter btAdapter, DeviceListAdapter deviceListAdapter) {
         this.btAdapter = btAdapter;
-        this.deviceAdapter = deviceAdapter;
-        deviceList = deviceAdapter.getList();
+        deviceList = deviceListAdapter.getList();
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if(btAdapter !=null && btAdapter.isDiscovering())
-            btAdapter.cancelDiscovery();
+        cancelBtAdapterDiscover();
         processBondState(deviceList.get(position).getBtDevice());
     }
 
+    private void cancelBtAdapterDiscover() {
+        if(btAdapter !=null && btAdapter.isDiscovering())
+            btAdapter.cancelDiscovery();
+    }
     private void processBondState(BluetoothDevice btDevice) {
         switch (btDevice.getBondState()) {
             case BluetoothDevice.BOND_NONE:
@@ -56,33 +56,40 @@ public class ListItemViewModel implements AdapterView.OnItemClickListener, Adapt
 
     private void processDeviceBondNone(BluetoothDevice btDevice) {
         try {
-            BlueTooth_Auto_Pair.creatBond(btDevice.getClass(), btDevice);
+            BtPairing.creatBond(btDevice.getClass(), btDevice);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private void processDeviceBondBonded(BluetoothDevice btDevice) {
-        Intent intent = new Intent(context.getApplicationContext(), DataTransmissionActivity.class);
-        intent.putExtra("device",btDevice.getAddress());
-        context.startActivity(intent);
+        Map<String, String> extraMap = new HashMap<>();
+        extraMap.put("device",btDevice.getAddress());
+        newProgressCreation.startNewActivity(extraMap);
     }
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        if(btAdapter !=null && btAdapter.isDiscovering())
-            btAdapter.cancelDiscovery();
+        cancelBtAdapterDiscover();
+        processItemLongClick(position);
+        return true;
+    }
+
+    private void processItemLongClick(int position) {
         BluetoothDevice device = deviceList.get(position).getBtDevice();
         if (device.getBondState()==BluetoothDevice.BOND_BONDED) {
             listItemViewUpdata.showDialog(deviceList.get(position));
         } else {
             processDeviceBondNone(device);
         }
-        return true;
     }
 
     public void setListItemViewUpdata(ListItemViewUpdata listItemViewUpdata) {
         this.listItemViewUpdata = listItemViewUpdata;
+    }
+
+    public void setNewProgressCreation(NewProgressCreation newProgressCreation) {
+        this.newProgressCreation = newProgressCreation;
     }
 
 }

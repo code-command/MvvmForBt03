@@ -3,6 +3,7 @@ package com.mvvm.zzy.mvvmforbt03.View;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -11,20 +12,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.mvvm.zzy.mvvmforbt03.BR;
-import com.mvvm.zzy.mvvmforbt03.Model.BlueTooth_Auto_Pair;
 import com.mvvm.zzy.mvvmforbt03.Model.BtDeviceItem;
+import com.mvvm.zzy.mvvmforbt03.Model.BtPairing;
+import com.mvvm.zzy.mvvmforbt03.Model.DeviceListAdapter;
 import com.mvvm.zzy.mvvmforbt03.Model.SystemInfo;
 import com.mvvm.zzy.mvvmforbt03.R;
-import com.mvvm.zzy.mvvmforbt03.ViewModel.BtReceiver;
-import com.mvvm.zzy.mvvmforbt03.ViewModel.DeviceAdapter;
-import com.mvvm.zzy.mvvmforbt03.ViewModel.ListItemViewModel;
-import com.mvvm.zzy.mvvmforbt03.ViewModel.ListItemViewUpdata;
-import com.mvvm.zzy.mvvmforbt03.ViewModel.SearchButtonViewModel;
-import com.mvvm.zzy.mvvmforbt03.ViewModel.SwitchButtonViewModel;
+import com.mvvm.zzy.mvvmforbt03.ViewModel.BluetoothViewModel.BtReceiver;
+import com.mvvm.zzy.mvvmforbt03.ViewModel.ButtonViewModel.SearchButtonViewModel;
+import com.mvvm.zzy.mvvmforbt03.ViewModel.ButtonViewModel.SwitchButtonViewModel;
+import com.mvvm.zzy.mvvmforbt03.ViewModel.ListViewModel.ListItemViewModel;
+import com.mvvm.zzy.mvvmforbt03.ViewModel.ListViewModel.ListItemViewUpdata;
+import com.mvvm.zzy.mvvmforbt03.ViewModel.ListViewModel.NewProgressCreation;
 import com.mvvm.zzy.mvvmforbt03.databinding.ActivityBtBinding;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class BtActivity extends AppCompatActivity {
 
@@ -37,7 +40,7 @@ public class BtActivity extends AppCompatActivity {
     private BluetoothAdapter btAdapter;
     private ActivityBtBinding binding;
     private List<BtDeviceItem> deviceList;
-    private DeviceAdapter<BtDeviceItem> deviceAdapter;
+    private DeviceListAdapter deviceListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +60,7 @@ public class BtActivity extends AppCompatActivity {
     private void initParameters() {
         systemInfo = new SystemInfo();
         deviceList = new ArrayList<>();
-        deviceAdapter = new DeviceAdapter<>(BtActivity.this, R.layout.device_item, BR.deviceItem, deviceList);
+        deviceListAdapter = new DeviceListAdapter<>(BtActivity.this, R.layout.device_item, BR.deviceItem, deviceList);
         initBtAdapter();
         initBtReceiver();
     }
@@ -75,7 +78,7 @@ public class BtActivity extends AppCompatActivity {
     }
 
     private void initBtReceiver() {
-        btReceiver = new BtReceiver(btAdapter, systemInfo, deviceAdapter);
+        btReceiver = new BtReceiver(btAdapter, systemInfo, deviceListAdapter);
         registerIntentFilter();
         registerReceiver(btReceiver, btFilter);
     }
@@ -93,11 +96,21 @@ public class BtActivity extends AppCompatActivity {
     private void initBinding() {
         switchButtonViewModel = new SwitchButtonViewModel(btAdapter);
         searchButtonViewModel = new SearchButtonViewModel(btAdapter);
-        listItemViewModel = new ListItemViewModel(this, btAdapter, deviceAdapter);
+        listItemViewModel = new ListItemViewModel(btAdapter, deviceListAdapter);
         listItemViewModel.setListItemViewUpdata(new ListItemViewUpdata() {
             @Override
             public void showDialog(BtDeviceItem deviceItem) {
                 processShowDialog(deviceItem);
+            }
+        });
+        listItemViewModel.setNewProgressCreation(new NewProgressCreation() {
+            @Override
+            public void startNewActivity(Map<String, String> extraMap) {
+                Intent intent = new Intent(getApplicationContext(), DataTransmissionActivity.class);
+                for (Map.Entry<String, String> entry : extraMap.entrySet()) {
+                    intent.putExtra(entry.getKey(), entry.getValue());
+                }
+                startActivity(intent);
             }
         });
 
@@ -105,7 +118,7 @@ public class BtActivity extends AppCompatActivity {
         binding.setSystemInfo(systemInfo);
         binding.setSwitchButton(switchButtonViewModel);
         binding.setSearchButton(searchButtonViewModel);
-        binding.setDeviceAdapter(deviceAdapter);
+        binding.setDeviceListAdapter(deviceListAdapter);
 
         binding.lvShowDev.setOnItemClickListener(listItemViewModel);
         binding.lvShowDev.setOnItemLongClickListener(listItemViewModel);
@@ -114,9 +127,9 @@ public class BtActivity extends AppCompatActivity {
     private void processShowDialog(BtDeviceItem deviceItem) {
         AlertDialog.Builder builder = new AlertDialog.Builder(BtActivity.this);
         builder.setIcon(R.drawable.bt_image)
-                .setMessage("是否将"+getString(R.string.Device_Name)+"为: "+deviceItem.getDeviceName()+"\n"
+                .setMessage("是取消"+getString(R.string.Device_Name)+"为: "+deviceItem.getDeviceName()+"\n"
                         +getString(R.string.Device_Address)+"为: "+deviceItem.getDeviceAddr()+"\n"
-                        +(deviceItem.isBond()?getString(R.string.Set_Default):getString(R.string.Auto_Pairing)));
+                        +getString(R.string.Pairing));
         setPositiveButton(builder, deviceItem.getBtDevice());
         setNegativeButton(builder, deviceItem.getBtDevice())
                 .create()
@@ -129,7 +142,7 @@ public class BtActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 try {
-                    BlueTooth_Auto_Pair.removeBond(btDevice.getClass(), btDevice);
+                    BtPairing.removeBond(btDevice.getClass(), btDevice);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

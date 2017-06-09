@@ -16,15 +16,15 @@
 
         <variable
             name="switchButton"
-            type="com.mvvm.zzy.mvvmforbt03.ViewModel.SwitchButtonViewModel"/>
+            type="com.mvvm.zzy.mvvmforbt03.ViewModel.ButtonViewModel.SwitchButtonViewModel"/>
 
         <variable
             name="searchButton"
-            type="com.mvvm.zzy.mvvmforbt03.ViewModel.SearchButtonViewModel"/>
+            type="com.mvvm.zzy.mvvmforbt03.ViewModel.ButtonViewModel.SearchButtonViewModel"/>
 
         <variable
-            name="deviceAdapter"
-            type="com.mvvm.zzy.mvvmforbt03.ViewModel.DeviceAdapter"/>
+            name="deviceListAdapter"
+            type="com.mvvm.zzy.mvvmforbt03.Model.DeviceListAdapter"/>
 
     </data>
 
@@ -50,7 +50,7 @@
                 android:layout_weight="1"
                 android:text="@{systemInfo.open ? @string/close_bt : @string/open_bt}"
                 android:background="@drawable/button_selector"
-                android:onClick="@{switchButton.switchButtonChangedListener}"/>
+                android:onClick="@{switchButton.buttonChangedListener}"/>
             <Button
                 android:id="@+id/btn_search_dev"
                 android:layout_width="wrap_content"
@@ -59,7 +59,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:text="@{systemInfo.search ? @string/stop_search : @string/start_search}"
-                android:onClick="@{searchButton.searchButtonChangedListener}"
+                android:onClick="@{searchButton.buttonChangedListener}"
                 android:background="@drawable/button_selector"/>
         </LinearLayout>
 
@@ -79,7 +79,7 @@
             android:dividerHeight="1dp"
             android:fadeScrollbars="true"
             android:choiceMode="singleChoice"
-            app:adapter="@{deviceAdapter}"
+            app:adapter="@{deviceListAdapter}"
             >
         </ListView>
 

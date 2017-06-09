@@ -1,4 +1,4 @@
-package com.mvvm.zzy.mvvmforbt03.ViewModel;
+package com.mvvm.zzy.mvvmforbt03.ViewModel.ListViewModel;
 
 
 import com.mvvm.zzy.mvvmforbt03.Model.BtDeviceItem;

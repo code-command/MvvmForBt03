@@ -1,4 +1,4 @@
-package com.mvvm.zzy.mvvmforbt03.ViewModel;
+package com.mvvm.zzy.mvvmforbt03.ViewModel.BluetoothViewModel;
 
 
 import android.bluetooth.BluetoothAdapter;
@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.mvvm.zzy.mvvmforbt03.Model.DeviceListAdapter;
 import com.mvvm.zzy.mvvmforbt03.Model.SystemInfo;
 
 /**
@@ -21,12 +22,12 @@ public class BtReceiver extends BroadcastReceiver {
     private BtAdapterViewModel btAdapterViewModel;
     private BtDeviceViewModel btDeviceViewModel;
 
-    public BtReceiver(BluetoothAdapter btAdapter, SystemInfo systemInfo, DeviceAdapter deviceAdapter) {
+    public BtReceiver(BluetoothAdapter btAdapter, SystemInfo systemInfo, DeviceListAdapter deviceListAdapter) {
         this.btAdapter = btAdapter;
         this.systemInfo = systemInfo;
 
-        btAdapterViewModel = new BtAdapterViewModel(btAdapter, systemInfo, deviceAdapter);
-        btDeviceViewModel = new BtDeviceViewModel(deviceAdapter, systemInfo);
+        btAdapterViewModel = new BtAdapterViewModel(btAdapter, systemInfo, deviceListAdapter);
+        btDeviceViewModel = new BtDeviceViewModel(deviceListAdapter, systemInfo);
     }
 
     @Override

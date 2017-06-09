@@ -1,9 +1,9 @@
-package com.mvvm.zzy.mvvmforbt03.ViewModel;
+package com.mvvm.zzy.mvvmforbt03.ViewModel.BluetoothViewModel;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 
-import com.mvvm.zzy.mvvmforbt03.Model.BtDeviceItem;
+import com.mvvm.zzy.mvvmforbt03.Model.DeviceListAdapter;
 import com.mvvm.zzy.mvvmforbt03.Model.SystemInfo;
 
 /**
@@ -13,12 +13,12 @@ import com.mvvm.zzy.mvvmforbt03.Model.SystemInfo;
 public class BtAdapterViewModel {
     private BluetoothAdapter btAdapter;
     private SystemInfo systemInfo;
-    private DeviceAdapter<BtDeviceItem> deviceAdapter;
+    private DeviceListAdapter deviceListAdapter;
 
-    public BtAdapterViewModel(BluetoothAdapter btAdapter, SystemInfo systemInfo, DeviceAdapter<BtDeviceItem> deviceAdapter) {
+    public BtAdapterViewModel(BluetoothAdapter btAdapter, SystemInfo systemInfo, DeviceListAdapter deviceListAdapter) {
         this.btAdapter = btAdapter;
         this.systemInfo = systemInfo;
-        this.deviceAdapter = deviceAdapter;
+        this.deviceListAdapter = deviceListAdapter;
     }
 
     public boolean processIntentChanged(Intent intent) {
@@ -60,7 +60,7 @@ public class BtAdapterViewModel {
         if (btAdapter.isDiscovering()) {
             btAdapter.cancelDiscovery();
         }
-        deviceAdapter.clearList();
+        deviceListAdapter.clearList();
     }
 
     private boolean processActionChanged(Intent intent) {
@@ -81,7 +81,7 @@ public class BtAdapterViewModel {
 
     private void btAdapter_DISCOVERY_STARTED() {
         systemInfo.setSearch(true);
-        deviceAdapter.clearList();
+        deviceListAdapter.clearList();
     }
 
     private void btAdapter_DISCOVERY_FINISHED() {

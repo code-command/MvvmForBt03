@@ -1,28 +1,22 @@
-package com.mvvm.zzy.mvvmforbt03.ViewModel;
+package com.mvvm.zzy.mvvmforbt03.ViewModel.ButtonViewModel;
 
 import android.bluetooth.BluetoothAdapter;
 import android.view.View;
 
 /**
- * Created by Administrator on 2017/6/6 0006.
+ * Created by Administrator on 2017/6/9 0009.
  */
 
-public class SwitchButtonViewModel {
+public class SwitchButtonViewModel extends ButtonViewModel {
+
     private BluetoothAdapter btAdapter;
 
     public SwitchButtonViewModel(BluetoothAdapter btAdapter) {
         this.btAdapter = btAdapter;
     }
 
-    public BluetoothAdapter getBtAdapter() {
-        return btAdapter;
-    }
-
-    public void setBtAdapter(BluetoothAdapter btAdapter) {
-        this.btAdapter = btAdapter;
-    }
-
-    public void switchButtonChangedListener(View view) {
+    @Override
+    public void buttonChangedListener(View view) {
         if (btAdapter.isEnabled()) {
             btAdapter.disable();
         } else {

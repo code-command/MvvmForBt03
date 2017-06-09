@@ -1,9 +1,10 @@
-package com.mvvm.zzy.mvvmforbt03.ViewModel;
+package com.mvvm.zzy.mvvmforbt03.ViewModel.BluetoothViewModel;
 
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 
 import com.mvvm.zzy.mvvmforbt03.Model.BtDeviceItem;
+import com.mvvm.zzy.mvvmforbt03.Model.DeviceListAdapter;
 import com.mvvm.zzy.mvvmforbt03.Model.SystemInfo;
 
 /**
@@ -11,11 +12,11 @@ import com.mvvm.zzy.mvvmforbt03.Model.SystemInfo;
  */
 
 public class BtDeviceViewModel {
-    private DeviceAdapter deviceAdapter;
+    private DeviceListAdapter deviceListAdapter;
     private SystemInfo systemInfo;
 
-    public BtDeviceViewModel(DeviceAdapter deviceAdapter, SystemInfo systemInfo) {
-        this.deviceAdapter = deviceAdapter;
+    public BtDeviceViewModel(DeviceListAdapter deviceListAdapter, SystemInfo systemInfo) {
+        this.deviceListAdapter = deviceListAdapter;
         this.systemInfo = systemInfo;
     }
 
@@ -51,7 +52,7 @@ public class BtDeviceViewModel {
         BluetoothDevice btDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
         BtDeviceItem btDeviceItem = new BtDeviceItem(btDevice.getName(), btDevice.getAddress(),
                 btDevice.getBondState()==BluetoothDevice.BOND_BONDED, btDevice);
-        deviceAdapter.updataListItem(btDeviceItem);
+        deviceListAdapter.updateList(btDeviceItem);
     }
 
 }
