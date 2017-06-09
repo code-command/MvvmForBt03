@@ -3,8 +3,6 @@ package com.mvvm.zzy.mvvmforbt03.ViewModel;
 import android.bluetooth.BluetoothAdapter;
 import android.view.View;
 
-import com.mvvm.zzy.mvvmforbt03.Model.SystemInfo;
-
 /**
  * Created by Administrator on 2017/6/6 0006.
  */

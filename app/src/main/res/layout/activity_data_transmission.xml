@@ -10,4 +10,61 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.mvvm.zzy.mvvmforbt03.View.DataTransmissionActivity">
 
+    <SurfaceView
+        android:id="@+id/sv_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:layout_marginTop="80dp" />
+
+    <TextView
+        android:id="@+id/tv_show_data"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/ll_service"
+        android:layout_marginBottom="200dp"
+        android:gravity="center_vertical"
+        android:visibility="invisible"
+        android:maxLines="10"
+        android:textIsSelectable="true"
+        android:textColor="#00896C"
+        android:textSize="15sp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="350dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/ll_service">
+
+    <Button
+        style="?android:attr/buttonBarButtonStyle"
+        android:id="@+id/btn_switch_receive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_weight="3"
+        android:background="@drawable/button_selector"
+        android:text="@string/receive_begin"
+        />
+
+    <Button
+        style="?android:attr/buttonBarButtonStyle"
+        android:id="@+id/btn_clear_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/button_selector"
+        android:text="@string/clear"
+        />
+
+    </LinearLayout>
+
 </RelativeLayout>

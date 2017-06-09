@@ -6,8 +6,6 @@ import android.content.Intent;
 import com.mvvm.zzy.mvvmforbt03.Model.BtDeviceItem;
 import com.mvvm.zzy.mvvmforbt03.Model.SystemInfo;
 
-import java.util.List;
-
 /**
  * Created by Administrator on 2017/6/6 0006.
  */
@@ -15,12 +13,12 @@ import java.util.List;
 public class BtAdapterViewModel {
     private BluetoothAdapter btAdapter;
     private SystemInfo systemInfo;
-    private List<BtDeviceItem> list;
+    private DeviceAdapter<BtDeviceItem> deviceAdapter;
 
-    public BtAdapterViewModel(BluetoothAdapter btAdapter, SystemInfo systemInfo, List<BtDeviceItem> list) {
+    public BtAdapterViewModel(BluetoothAdapter btAdapter, SystemInfo systemInfo, DeviceAdapter<BtDeviceItem> deviceAdapter) {
         this.btAdapter = btAdapter;
         this.systemInfo = systemInfo;
-        this.list = list;
+        this.deviceAdapter = deviceAdapter;
     }
 
     public boolean processIntentChanged(Intent intent) {
@@ -29,7 +27,7 @@ public class BtAdapterViewModel {
             result = true;
         if (processActionChanged(intent))
             result = true;
-        return true;
+        return result;
     }
 
     private boolean processIntChanged(Intent intent) {
@@ -42,7 +40,7 @@ public class BtAdapterViewModel {
 
             case BluetoothAdapter.STATE_OFF:
             case BluetoothAdapter.STATE_TURNING_OFF:
-                btAdapterOff();
+                btAdapterStateOff();
                 return true;
 
             default:
@@ -55,12 +53,14 @@ public class BtAdapterViewModel {
         systemInfo.setOpen(true);
     }
 
-    private void btAdapterOff() {
+    private void btAdapterStateOff() {
         systemInfo.setOpen(false);
         systemInfo.setFound(false);
+        systemInfo.setSearch(false);
         if (btAdapter.isDiscovering()) {
             btAdapter.cancelDiscovery();
         }
+        deviceAdapter.clearList();
     }
 
     private boolean processActionChanged(Intent intent) {
@@ -81,6 +81,7 @@ public class BtAdapterViewModel {
 
     private void btAdapter_DISCOVERY_STARTED() {
         systemInfo.setSearch(true);
+        deviceAdapter.clearList();
     }
 
     private void btAdapter_DISCOVERY_FINISHED() {

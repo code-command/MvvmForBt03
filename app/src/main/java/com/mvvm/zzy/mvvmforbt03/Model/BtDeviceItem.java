@@ -62,4 +62,15 @@ public class BtDeviceItem extends BaseObservable {
         this.btDevice = btDevice;
         notifyPropertyChanged(BR.deviceItem);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BtDeviceItem that = (BtDeviceItem) o;
+
+        return deviceAddr.equals(that.deviceAddr);
+
+    }
 }

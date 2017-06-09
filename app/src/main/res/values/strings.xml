@@ -11,4 +11,20 @@
 
     <string name="device_name">蓝牙名称</string>
     <string name="device_addr">蓝牙地址</string>
+
+
+    <string name="receive_begin">开始接收</string>
+    <string name="receive_stop">停止接收</string>
+    <string name="send_data">发送</string>
+    <string name="send_hint">输入要发送数据</string>
+    <string name="clear">清除</string>
+
+    <string name="Device_Name">蓝牙名称</string>
+    <string name="Device_Address">蓝牙地址</string>
+
+    <string name="Auto_Pairing">自动配对</string>
+    <string name="Set_Default">设置为默认设备</string>
+    <string name="Select_Ok">好的</string>
+    <string name="Select_Cancel">我自己来</string>
+    <string name="Show_Cancel">自己动手丰衣足食</string>
 </resources>

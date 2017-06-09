@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.mvvm.zzy.mvvmforbt03.Model.BlueTooth_Auto_Pair;
 import com.mvvm.zzy.mvvmforbt03.Model.BtDeviceItem;
 import com.mvvm.zzy.mvvmforbt03.View.DataTransmissionActivity;
 
@@ -17,11 +18,19 @@ import java.util.List;
  */
 
 public class ListItemViewModel implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener{
-
+    private Context context;
     private BluetoothAdapter btAdapter;
     private List<BtDeviceItem> deviceList;
-    private Context context;
+    private DeviceAdapter deviceAdapter;
 
+    private ListItemViewUpdata listItemViewUpdata;
+
+    public ListItemViewModel(Context context, BluetoothAdapter btAdapter, DeviceAdapter deviceAdapter) {
+        this.context = context;
+        this.btAdapter = btAdapter;
+        this.deviceAdapter = deviceAdapter;
+        deviceList = deviceAdapter.getList();
+    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -46,15 +55,34 @@ public class ListItemViewModel implements AdapterView.OnItemClickListener, Adapt
     }
 
     private void processDeviceBondNone(BluetoothDevice btDevice) {
-
+        try {
+            BlueTooth_Auto_Pair.creatBond(btDevice.getClass(), btDevice);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void processDeviceBondBonded(BluetoothDevice btDevice) {
         Intent intent = new Intent(context.getApplicationContext(), DataTransmissionActivity.class);
+        intent.putExtra("device",btDevice.getAddress());
+        context.startActivity(intent);
     }
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        return false;
+        if(btAdapter !=null && btAdapter.isDiscovering())
+            btAdapter.cancelDiscovery();
+        BluetoothDevice device = deviceList.get(position).getBtDevice();
+        if (device.getBondState()==BluetoothDevice.BOND_BONDED) {
+            listItemViewUpdata.showDialog(deviceList.get(position));
+        } else {
+            processDeviceBondNone(device);
+        }
+        return true;
     }
+
+    public void setListItemViewUpdata(ListItemViewUpdata listItemViewUpdata) {
+        this.listItemViewUpdata = listItemViewUpdata;
+    }
+
 }

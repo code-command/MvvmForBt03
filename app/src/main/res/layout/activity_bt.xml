@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -20,6 +21,11 @@
         <variable
             name="searchButton"
             type="com.mvvm.zzy.mvvmforbt03.ViewModel.SearchButtonViewModel"/>
+
+        <variable
+            name="deviceAdapter"
+            type="com.mvvm.zzy.mvvmforbt03.ViewModel.DeviceAdapter"/>
+
     </data>
 
     <RelativeLayout
@@ -39,6 +45,7 @@
                 android:id="@+id/btn_switch_BT"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="15dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:text="@{systemInfo.open ? @string/close_bt : @string/open_bt}"
@@ -48,7 +55,7 @@
                 android:id="@+id/btn_search_dev"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_margin="15dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:text="@{systemInfo.search ? @string/stop_search : @string/start_search}"
@@ -72,6 +79,7 @@
             android:dividerHeight="1dp"
             android:fadeScrollbars="true"
             android:choiceMode="singleChoice"
+            app:adapter="@{deviceAdapter}"
             >
         </ListView>
 

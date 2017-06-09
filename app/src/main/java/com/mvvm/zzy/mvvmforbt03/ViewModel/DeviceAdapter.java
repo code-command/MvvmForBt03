@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import java.util.List;
-import java.util.zip.Inflater;
 
 /**
  * Created by zhangziyu on 2017/6/7.
@@ -28,6 +27,26 @@ public class DeviceAdapter<T> extends BaseAdapter {
         this.layoutId = layoutId;
         this.variableId = variableId;
         this.list = list;
+    }
+
+    public void clearList() {
+        list.clear();
+        this.notifyDataSetChanged();
+    }
+
+    public void updataListItem(T item) {
+        if (list.contains(item)) {
+            int postion = list.indexOf(item);
+            list.remove(postion);
+            list.add(postion, item);
+        } else {
+            list.add(item);
+        }
+        this.notifyDataSetChanged();
+    }
+
+    public List<T> getList () {
+        return  list;
     }
 
     @Override

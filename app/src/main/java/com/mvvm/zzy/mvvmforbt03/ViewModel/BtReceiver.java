@@ -7,10 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.mvvm.zzy.mvvmforbt03.Model.BtDeviceItem;
 import com.mvvm.zzy.mvvmforbt03.Model.SystemInfo;
-
-import java.util.List;
 
 /**
  * Created by Administrator on 2017/6/6 0006.
@@ -20,34 +17,22 @@ public class BtReceiver extends BroadcastReceiver {
     private BluetoothAdapter btAdapter;
     private BluetoothDevice btDevice;
     private SystemInfo systemInfo;
-    private List<BtDeviceItem> deviceList;
 
     private BtAdapterViewModel btAdapterViewModel;
     private BtDeviceViewModel btDeviceViewModel;
 
-    BtReceiverUpdataListener updataListener;
-
-    public BtReceiver(BluetoothAdapter btAdapter, SystemInfo systemInfo, List<BtDeviceItem> deviceList) {
+    public BtReceiver(BluetoothAdapter btAdapter, SystemInfo systemInfo, DeviceAdapter deviceAdapter) {
         this.btAdapter = btAdapter;
         this.systemInfo = systemInfo;
-        this.deviceList = deviceList;
 
-        btAdapterViewModel = new BtAdapterViewModel(btAdapter, systemInfo, deviceList);
-        btDeviceViewModel = new BtDeviceViewModel(deviceList, systemInfo);
+        btAdapterViewModel = new BtAdapterViewModel(btAdapter, systemInfo, deviceAdapter);
+        btDeviceViewModel = new BtDeviceViewModel(deviceAdapter, systemInfo);
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (btAdapterViewModel.processIntentChanged(intent))
-            updataListener.updataSystemInfo(systemInfo);
+        btAdapterViewModel.processIntentChanged(intent);
 
-        if (btDeviceViewModel.processIntentChanged(intent)) {
-            updataListener.updataBtDeviceList(systemInfo, deviceList);
-        }
+        btDeviceViewModel.processIntentChanged(intent);
     }
-
-    public void setUpdataListener(BtReceiverUpdataListener updataListener) {
-        this.updataListener = updataListener;
-    }
-
 }
