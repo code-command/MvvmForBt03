@@ -37,9 +37,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_marginTop="50dp"
             android:id="@+id/ll_control_btn"
-            android:orientation="@{systemInfo.found ? LinearLayout.HORIZONTAL : LinearLayout.VERTICAL}" >
+            app:btLinearLayoutHandover  ="@{systemInfo.found}">
 
             <Button
                 android:id="@+id/btn_switch_BT"
@@ -70,8 +70,8 @@
             android:headerDividersEnabled="true"
             android:footerDividersEnabled="true"
             android:layout_below="@+id/ll_control_btn"
-            android:layout_marginTop="80dp"
-            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:layout_centerVertical="true"
             android:visibility="@{systemInfo.found ? View.VISIBLE : View.GONE}"
             android:cacheColorHint="#00000000"
             android:centerColor="#ffffff"
