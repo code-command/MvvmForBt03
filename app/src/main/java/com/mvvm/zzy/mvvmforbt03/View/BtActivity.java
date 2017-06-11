@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
@@ -110,6 +111,7 @@ public class BtActivity extends AppCompatActivity {
                 for (Map.Entry<String, String> entry : extraMap.entrySet()) {
                     intent.putExtra(entry.getKey(), entry.getValue());
                 }
+//                intent.putExtra("systemInfo", systemInfo);
                 startActivity(intent);
             }
         });

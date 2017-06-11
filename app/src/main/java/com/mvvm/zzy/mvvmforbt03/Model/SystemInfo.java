@@ -5,14 +5,54 @@ import android.databinding.Bindable;
 
 import com.mvvm.zzy.mvvmforbt03.BR;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2017/6/6 0006.
  */
 
-public class SystemInfo extends BaseObservable{
+public class SystemInfo extends BaseObservable implements Serializable {
     private boolean open;
     private boolean search;
     private boolean found;
+    private boolean receive;
+    private boolean send;
+
+    public SystemInfo() {
+        this.open = false;
+        this.search = false;
+        this.found = false;
+        this.receive = false;
+        this.send = false;
+    }
+
+    @Bindable
+    public boolean isReceive() {
+        return receive;
+    }
+
+    public void setReceive(boolean receive) {
+        this.receive = receive;
+        notifyPropertyChanged(BR.receive);
+        if (receive) {
+            send = false;
+            notifyPropertyChanged(BR.send);
+        }
+
+    }
+
+    @Bindable
+    public boolean isSend() {
+        return send;
+    }
+
+    public void setSend(boolean send) {
+        this.send = send;
+        notifyPropertyChanged(BR.send);
+        if (send) {
+            notifyPropertyChanged(BR.receive);
+        }
+    }
 
     @Bindable
     public boolean isFound() {
@@ -22,13 +62,6 @@ public class SystemInfo extends BaseObservable{
     public void setFound(boolean found) {
         this.found = found;
         notifyPropertyChanged(BR.found);
-    }
-
-    public SystemInfo() {
-        this.open = false;
-        this.search = false;
-        this.found = false;
-
     }
 
     @Bindable
