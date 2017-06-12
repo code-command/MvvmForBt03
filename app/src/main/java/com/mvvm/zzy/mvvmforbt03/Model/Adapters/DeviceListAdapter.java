@@ -1,4 +1,8 @@
-package com.mvvm.zzy.mvvmforbt03.Model;
+package com.mvvm.zzy.mvvmforbt03.Model.Adapters;
+
+/**
+ * Created by Administrator on 2017/6/12 0012.
+ */
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;

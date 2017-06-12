@@ -6,7 +6,7 @@
     <data>
         <variable
             name="deviceItem"
-            type="com.mvvm.zzy.mvvmforbt03.Model.BtDeviceItem"/>
+            type="com.mvvm.zzy.mvvmforbt03.Model.Bluetooths.BtDeviceItem"/>
 
         <import type="android.view.View" />
     </data>

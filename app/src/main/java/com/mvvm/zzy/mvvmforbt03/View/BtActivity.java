@@ -1,5 +1,6 @@
 package com.mvvm.zzy.mvvmforbt03.View;
 
+
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.DialogInterface;
@@ -7,16 +8,15 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.mvvm.zzy.mvvmforbt03.BR;
-import com.mvvm.zzy.mvvmforbt03.Model.BtDeviceItem;
-import com.mvvm.zzy.mvvmforbt03.Model.BtPairing;
-import com.mvvm.zzy.mvvmforbt03.Model.DeviceListAdapter;
-import com.mvvm.zzy.mvvmforbt03.Model.SystemInfo;
+import com.mvvm.zzy.mvvmforbt03.Model.Adapters.DeviceListAdapter;
+import com.mvvm.zzy.mvvmforbt03.Model.Bluetooths.BtDeviceItem;
+import com.mvvm.zzy.mvvmforbt03.Model.Bluetooths.BtPairing;
+import com.mvvm.zzy.mvvmforbt03.Model.Data.SystemInfo.SystemInfo;
 import com.mvvm.zzy.mvvmforbt03.R;
 import com.mvvm.zzy.mvvmforbt03.ViewModel.BluetoothViewModel.BtReceiver;
 import com.mvvm.zzy.mvvmforbt03.ViewModel.ButtonViewModel.SearchButtonViewModel;

@@ -7,8 +7,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.mvvm.zzy.mvvmforbt03.Model.DeviceListAdapter;
-import com.mvvm.zzy.mvvmforbt03.Model.SystemInfo;
+import com.mvvm.zzy.mvvmforbt03.Model.Adapters.DeviceListAdapter;
+import com.mvvm.zzy.mvvmforbt03.Model.Data.SystemInfo.SystemInfo;
 
 /**
  * Created by Administrator on 2017/6/6 0006.

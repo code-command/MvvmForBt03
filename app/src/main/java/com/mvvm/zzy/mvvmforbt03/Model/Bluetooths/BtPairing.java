@@ -1,11 +1,11 @@
-package com.mvvm.zzy.mvvmforbt03.Model;
+package com.mvvm.zzy.mvvmforbt03.Model.Bluetooths;
 
 import android.bluetooth.BluetoothDevice;
 
 import java.lang.reflect.Method;
 
 /**
- * Created by Administrator on 2017/6/9 0009.
+ * Created by Administrator on 2017/6/12 0012.
  */
 
 public class BtPairing {

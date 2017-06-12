@@ -12,7 +12,7 @@
 
         <variable
             name="systemInfo"
-            type="com.mvvm.zzy.mvvmforbt03.Model.SystemInfo"/>
+            type="com.mvvm.zzy.mvvmforbt03.Model.Data.SystemInfo.SystemInfo"/>
 
         <variable
             name="switchButton"
@@ -24,7 +24,7 @@
 
         <variable
             name="deviceListAdapter"
-            type="com.mvvm.zzy.mvvmforbt03.Model.DeviceListAdapter"/>
+            type="com.mvvm.zzy.mvvmforbt03.Model.Adapters.DeviceListAdapter"/>
 
     </data>
 

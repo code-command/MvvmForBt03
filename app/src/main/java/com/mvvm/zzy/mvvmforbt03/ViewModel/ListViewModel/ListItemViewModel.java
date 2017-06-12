@@ -5,9 +5,9 @@ import android.bluetooth.BluetoothDevice;
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.mvvm.zzy.mvvmforbt03.Model.BtDeviceItem;
-import com.mvvm.zzy.mvvmforbt03.Model.BtPairing;
-import com.mvvm.zzy.mvvmforbt03.Model.DeviceListAdapter;
+import com.mvvm.zzy.mvvmforbt03.Model.Adapters.DeviceListAdapter;
+import com.mvvm.zzy.mvvmforbt03.Model.Bluetooths.BtDeviceItem;
+import com.mvvm.zzy.mvvmforbt03.Model.Bluetooths.BtPairing;
 
 import java.util.HashMap;
 import java.util.List;

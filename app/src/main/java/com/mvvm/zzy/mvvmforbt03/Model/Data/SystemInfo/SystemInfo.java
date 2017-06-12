@@ -1,4 +1,4 @@
-package com.mvvm.zzy.mvvmforbt03.Model;
+package com.mvvm.zzy.mvvmforbt03.Model.Data.SystemInfo;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
@@ -8,7 +8,7 @@ import com.mvvm.zzy.mvvmforbt03.BR;
 import java.io.Serializable;
 
 /**
- * Created by Administrator on 2017/6/6 0006.
+ * Created by Administrator on 2017/6/12 0012.
  */
 
 public class SystemInfo extends BaseObservable implements Serializable {
@@ -111,3 +111,4 @@ public class SystemInfo extends BaseObservable implements Serializable {
         return result;
     }
 }
+

@@ -1,17 +1,15 @@
-package com.mvvm.zzy.mvvmforbt03.Model;
+package com.mvvm.zzy.mvvmforbt03.Model.Adapters;
 
-import android.databinding.BindingAdapter;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 /**
- * Created by Administrator on 2017/6/10 0010.
+ * Created by Administrator on 2017/6/12 0012.
  */
 
-public class BtBindingAdapter {
-
-    @BindingAdapter("btLinearLayoutHandover")
+public class BindingAdapter {
+    @android.databinding.BindingAdapter("btLinearLayoutHandover")
     public static void setLinearLayoutHandover(LinearLayout view, boolean found) {
         RelativeLayout.LayoutParams paramsr = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         if (found) {

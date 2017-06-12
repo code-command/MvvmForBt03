@@ -1,4 +1,4 @@
-package com.mvvm.zzy.mvvmforbt03.Model;
+package com.mvvm.zzy.mvvmforbt03.Model.Bluetooths;
 
 import android.bluetooth.BluetoothDevice;
 import android.databinding.BaseObservable;
@@ -7,7 +7,7 @@ import android.databinding.Bindable;
 import com.mvvm.zzy.mvvmforbt03.BR;
 
 /**
- * Created by zhangziyu on 2017/6/7.
+ * Created by Administrator on 2017/6/12 0012.
  */
 
 public class BtDeviceItem extends BaseObservable {
