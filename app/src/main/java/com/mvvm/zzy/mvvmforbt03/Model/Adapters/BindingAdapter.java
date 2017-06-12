@@ -3,12 +3,29 @@ package com.mvvm.zzy.mvvmforbt03.Model.Adapters;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.mvvm.zzy.mvvmforbt03.R;
 
 /**
  * Created by Administrator on 2017/6/12 0012.
  */
 
 public class BindingAdapter {
+
+    @android.databinding.BindingAdapter({"newReceiveData", "isReceiveing", "isClear"})
+    public static void updateReceiveText(TextView textView, String newData, boolean receive, boolean clear) {
+        if (clear) {
+            textView.setText(R.string.empty);
+            return;
+        }
+        if (receive) {
+            textView.append(newData);
+        } else {
+            textView.setText(R.string.empty);
+        }
+    }
+
     @android.databinding.BindingAdapter("btLinearLayoutHandover")
     public static void setLinearLayoutHandover(LinearLayout view, boolean found) {
         RelativeLayout.LayoutParams paramsr = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);

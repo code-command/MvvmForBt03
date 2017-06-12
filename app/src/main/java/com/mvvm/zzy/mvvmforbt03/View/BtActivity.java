@@ -111,7 +111,7 @@ public class BtActivity extends AppCompatActivity {
                 for (Map.Entry<String, String> entry : extraMap.entrySet()) {
                     intent.putExtra(entry.getKey(), entry.getValue());
                 }
-//                intent.putExtra("systemInfo", systemInfo);
+                intent.putExtra("systemInfo", systemInfo);
                 startActivity(intent);
             }
         });

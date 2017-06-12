@@ -6,7 +6,23 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
 
+        <variable
+            name="systemInfo"
+            type="com.mvvm.zzy.mvvmforbt03.Model.Data.SystemInfo.SystemInfo"/>
+
+        <variable
+            name="receiveData"
+            type="com.mvvm.zzy.mvvmforbt03.Model.Data.DataStructures.ReceptionData"/>
+
+        <variable
+            name="receiveButton"
+            type="com.mvvm.zzy.mvvmforbt03.ViewModel.ButtonViewModel.ReceiveButtonViewModel"/>
+
+        <variable
+            name="clearButton"
+            type="com.mvvm.zzy.mvvmforbt03.ViewModel.ButtonViewModel.ClearButtonViewModel"/>
     </data>
 
     <RelativeLayout
@@ -38,11 +54,14 @@
             android:layout_alignBottom="@+id/ll_service"
             android:layout_marginBottom="200dp"
             android:gravity="center_vertical"
-            android:visibility="invisible"
+            android:visibility="@{systemInfo.receive ? View.VISIBLE : View.INVISIBLE}"
             android:maxLines="10"
             android:textIsSelectable="true"
             android:textColor="#00896C"
             android:textSize="15sp"
+            app:newReceiveData="@{receiveData.toShow}"
+            app:isReceiveing="@{systemInfo.receive}"
+            app:isClear="@{systemInfo.clear}"
             />
 
         <LinearLayout
@@ -60,7 +79,8 @@
                 android:layout_margin="10dp"
                 android:layout_weight="3"
                 android:background="@drawable/button_selector"
-                android:text="@string/receive_begin"
+                android:text="@{systemInfo.receive ? @string/receive_stop : @string/receive_begin}"
+                android:onClick="@{receiveButton.buttonChangedListener}"
                 />
 
             <Button
@@ -72,6 +92,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/button_selector"
                 android:text="@string/clear"
+                android:onClick="@{clearButton.buttonChangedListener}"
                 />
 
         </LinearLayout>

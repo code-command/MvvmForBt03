@@ -64,7 +64,7 @@ public class ListItemViewModel implements AdapterView.OnItemClickListener, Adapt
 
     private void processDeviceBondBonded(BluetoothDevice btDevice) {
         Map<String, String> extraMap = new HashMap<>();
-        extraMap.put("device",btDevice.getAddress());
+        extraMap.put("deviceAddr",btDevice.getAddress());
         newProgressCreation.startNewActivity(extraMap);
     }
 

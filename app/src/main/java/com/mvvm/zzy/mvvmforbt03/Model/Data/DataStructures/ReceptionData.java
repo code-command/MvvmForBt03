@@ -1,40 +1,52 @@
 package com.mvvm.zzy.mvvmforbt03.Model.Data.DataStructures;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+
+import com.mvvm.zzy.mvvmforbt03.BR;
+
+import java.io.Serializable;
+import java.util.Queue;
+
 /**
  * Created by zhangziyu on 2017/6/11.
  */
 
-public class ReceptionData extends BasicData {
+public class ReceptionData extends BaseObservable implements Serializable {
     private String checkCode;
     private String endCode;
-    private String codeData;
+    @Bindable
+    private StringBuilder codeData = new StringBuilder();
 
-    @Override
     public String getCheckCode() {
         return null;
     }
 
-    @Override
-    public boolean checkCompleteData(StringBuilder resource) {
+    public boolean checkCompleteData(Queue<Byte> resource) {
         return true;
     }
 
-    @Override
-    public void setCoreData(String resource) {
-
+    @Bindable
+    public String getCodeData() {
+        return codeData.toString();
     }
 
-    @Override
-    public void interceptCoreData(StringBuilder resource) {
-
+    public void updateCoreData(String resource) {
+        codeData.setLength(0);
+        codeData.append(resource);
+        notifyPropertyChanged(BR.codeData);
     }
 
-    @Override
+    public void interceptCoreData(Queue<Byte> resource) {
+        String newCodeData = "Test";
+        updateCoreData(newCodeData);
+    }
+
     public int getDataLength() {
         return 0;
     }
 
     public String toShow() {
-        return codeData;
+        return codeData.toString();
     }
 }

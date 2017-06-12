@@ -17,6 +17,7 @@ public class SystemInfo extends BaseObservable implements Serializable {
     private boolean found;
     private boolean receive;
     private boolean send;
+    private boolean clear;
 
     public SystemInfo() {
         this.open = false;
@@ -24,6 +25,16 @@ public class SystemInfo extends BaseObservable implements Serializable {
         this.found = false;
         this.receive = false;
         this.send = false;
+        this.clear = false;
+    }
+
+    public void setSystemInfo(SystemInfo info) {
+        this.open = info.isOpen();
+        this.search = info.isSearch();
+        this.found = info.isFound();
+        this.receive  =info.isReceive();
+        this.send = info.isSend();
+        this.clear = info.isClear();
     }
 
     @Bindable
@@ -84,10 +95,20 @@ public class SystemInfo extends BaseObservable implements Serializable {
         notifyPropertyChanged(BR.search);
     }
 
-    public void setSystemInfo(SystemInfo info) {
-        this.open = info.isOpen();
-        this.search = info.isSearch();
-        this.found = info.isFound();
+    @Bindable
+    public boolean isClear() {
+        return clear;
+    }
+
+    public void setClear(boolean clear) {
+        this.clear = clear;
+        notifyPropertyChanged(BR.clear);
+    }
+
+    public void triggerClear() {
+        this.clear = true;
+        notifyPropertyChanged(BR.clear);
+        this.clear = false;
     }
 
     @Override

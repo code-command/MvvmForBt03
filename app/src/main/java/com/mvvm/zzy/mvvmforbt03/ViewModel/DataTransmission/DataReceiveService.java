@@ -2,9 +2,22 @@ package com.mvvm.zzy.mvvmforbt03.ViewModel.DataTransmission;
 
 
 import android.app.IntentService;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+
+import com.mvvm.zzy.mvvmforbt03.Model.Data.DataStructures.ReceptionData;
+import com.mvvm.zzy.mvvmforbt03.Model.Data.SystemInfo.SystemInfo;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.UUID;
 
 /**
  * Created by zhangziyu on 2017/6/11.
@@ -12,7 +25,25 @@ import android.support.annotation.Nullable;
 
 public class DataReceiveService extends IntentService {
 
+    private String deviceAddr;
+
+    private BluetoothAdapter btAdapter;
+    private SystemInfo systemInfo;
+    private BluetoothDevice btDevice;
+    private BluetoothSocket btSocket;
+    private InputStream receiveStream;
+    private SwitchBinder switchBinder = new SwitchBinder();
+    private byte[] receiveBuffer = new byte[32];
+    private Queue<Byte> receiveQueue = new LinkedList<Byte>();	//缓冲队列
+    private ReceptionData receptionData;
+
     private OnGetDataListener onGetDataListener;			//自定义回调接口
+
+    public class SwitchBinder extends Binder {
+        public DataReceiveService getService() {
+            return DataReceiveService.this;
+        }
+    }
 
     /**************************注册回调接口***************************/
     public void setOnGetDataListener(OnGetDataListener onGetDataListener) {
@@ -23,29 +54,53 @@ public class DataReceiveService extends IntentService {
         super(name);
     }
 
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return switchBinder;
+    }
+
     @Override
     public void onCreate() {
+        btAdapter = BluetoothAdapter.getDefaultAdapter();
         super.onCreate();
     }
 
     @Override
-    public int onStartCommand(@Nullable Intent intent, int flags, int startId) {
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        systemInfo = (SystemInfo)intent.getSerializableExtra("systemInfo");
+        receptionData = (ReceptionData)intent.getSerializableExtra("receiveData");
+        deviceAddr = intent.getStringExtra("deviceAddr");
+        btDevice = btAdapter.getRemoteDevice(deviceAddr);
         return super.onStartCommand(intent, flags, startId);
     }
 
-    @Nullable
     @Override
-    public IBinder onBind(Intent intent) {
-        return super.onBind(intent);
+    protected void onHandleIntent(Intent intent) {
+        final UUID deviceUUID = UUID.fromString(intent.getStringExtra("deviceUUID").toString());
+        try {
+            btSocket = btDevice.createInsecureRfcommSocketToServiceRecord(deviceUUID);
+            btSocket.connect();
+            receiveStream = btSocket.getInputStream();
+            while (systemInfo.isReceive()) {
+                receiveStream.read(receiveBuffer);
+                for (byte b : receiveBuffer) {
+                    receiveQueue.offer(b);
+                }
+                if (receptionData.checkCompleteData(receiveQueue)) {
+                    receptionData.interceptCoreData(receiveQueue);
+                    onGetDataListener.GetDataCollection(receptionData);
+                }
+            }
+        }catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     @Override
     public boolean onUnbind(Intent intent) {
+        btSocket = null;
         return super.onUnbind(intent);
-    }
-
-    @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
-
     }
 }
