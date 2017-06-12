@@ -144,7 +144,7 @@ public class BtActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 try {
-                    BtPairing.removeBond(btDevice.getClass(), btDevice);
+                    BtPairing.removeBond(btDevice.getClass(), btDevice)
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

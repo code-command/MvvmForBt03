@@ -8,13 +8,10 @@ import com.mvvm.zzy.mvvmforbt03.BR;
 import java.io.Serializable;
 import java.util.Queue;
 
-/**
- * Created by zhangziyu on 2017/6/11.
- */
 
 public class ReceptionData extends BaseObservable implements Serializable {
-    private String checkCode;
-    private String endCode;
+    private final String checkCode = "0x22";
+    private final String endCode = "0xdd";
     @Bindable
     private StringBuilder codeData = new StringBuilder();
 
@@ -23,6 +20,8 @@ public class ReceptionData extends BaseObservable implements Serializable {
     }
 
     public boolean checkCompleteData(Queue<Byte> resource) {
+        if (resource.contains(checkCode) || resource.contains(endCode))
+            return true;
         return true;
     }
 

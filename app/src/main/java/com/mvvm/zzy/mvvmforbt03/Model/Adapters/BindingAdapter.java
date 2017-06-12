@@ -7,10 +7,6 @@ import android.widget.TextView;
 
 import com.mvvm.zzy.mvvmforbt03.R;
 
-/**
- * Created by Administrator on 2017/6/12 0012.
- */
-
 public class BindingAdapter {
 
     @android.databinding.BindingAdapter({"newReceiveData", "isReceiveing", "isClear"})
@@ -35,7 +31,6 @@ public class BindingAdapter {
             recoverLinearLayout(view, paramsr);
         }
         view.setLayoutParams(paramsr);
-        paramsr = null;
     }
 
     private static void adjustLinearLayout(LinearLayout view, RelativeLayout.LayoutParams paramsr) {

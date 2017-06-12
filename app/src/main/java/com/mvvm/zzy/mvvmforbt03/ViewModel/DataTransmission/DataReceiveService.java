@@ -8,7 +8,6 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
 
 import com.mvvm.zzy.mvvmforbt03.Model.Data.DataStructures.ReceptionData;
 import com.mvvm.zzy.mvvmforbt03.Model.Data.SystemInfo.SystemInfo;
@@ -19,22 +18,15 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.UUID;
 
-/**
- * Created by zhangziyu on 2017/6/11.
- */
-
 public class DataReceiveService extends IntentService {
-
-    private String deviceAddr;
 
     private BluetoothAdapter btAdapter;
     private SystemInfo systemInfo;
     private BluetoothDevice btDevice;
     private BluetoothSocket btSocket;
-    private InputStream receiveStream;
     private SwitchBinder switchBinder = new SwitchBinder();
     private byte[] receiveBuffer = new byte[32];
-    private Queue<Byte> receiveQueue = new LinkedList<Byte>();	//缓冲队列
+    private Queue<Byte> receiveQueue = new LinkedList<>();
     private ReceptionData receptionData;
 
     private OnGetDataListener onGetDataListener;			//自定义回调接口
@@ -54,7 +46,6 @@ public class DataReceiveService extends IntentService {
         super(name);
     }
 
-    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return switchBinder;
@@ -70,37 +61,42 @@ public class DataReceiveService extends IntentService {
     public int onStartCommand(Intent intent, int flags, int startId) {
         systemInfo = (SystemInfo)intent.getSerializableExtra("systemInfo");
         receptionData = (ReceptionData)intent.getSerializableExtra("receiveData");
-        deviceAddr = intent.getStringExtra("deviceAddr");
+        String deviceAddr = intent.getStringExtra("deviceAddr");
         btDevice = btAdapter.getRemoteDevice(deviceAddr);
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        final UUID deviceUUID = UUID.fromString(intent.getStringExtra("deviceUUID").toString());
+        final UUID deviceUUID = UUID.fromString(intent.getStringExtra("deviceUUID"));
         try {
             btSocket = btDevice.createInsecureRfcommSocketToServiceRecord(deviceUUID);
             btSocket.connect();
-            receiveStream = btSocket.getInputStream();
+            InputStream receiveStream = btSocket.getInputStream();
             while (systemInfo.isReceive()) {
-                receiveStream.read(receiveBuffer);
-                for (byte b : receiveBuffer) {
-                    receiveQueue.offer(b);
-                }
-                if (receptionData.checkCompleteData(receiveQueue)) {
-                    receptionData.interceptCoreData(receiveQueue);
-                    onGetDataListener.GetDataCollection(receptionData);
+                int read = receiveStream.read(receiveBuffer);
+                if (read>0) {
+                    for (byte b : receiveBuffer) {
+                        receiveQueue.offer(b);
+                    }
+                    if (receptionData.checkCompleteData(receiveQueue)) {
+                        receptionData.interceptCoreData(receiveQueue);
+                        onGetDataListener.GetDataCollection(receptionData);
+                    }
                 }
             }
         }catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
     @Override
     public boolean onUnbind(Intent intent) {
-        btSocket = null;
+        try {
+            btSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return super.onUnbind(intent);
     }
 }

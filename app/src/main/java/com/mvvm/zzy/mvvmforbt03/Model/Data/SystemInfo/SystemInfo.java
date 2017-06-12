@@ -7,10 +7,6 @@ import com.mvvm.zzy.mvvmforbt03.BR;
 
 import java.io.Serializable;
 
-/**
- * Created by Administrator on 2017/6/12 0012.
- */
-
 public class SystemInfo extends BaseObservable implements Serializable {
     private boolean open;
     private boolean search;
@@ -53,16 +49,8 @@ public class SystemInfo extends BaseObservable implements Serializable {
     }
 
     @Bindable
-    public boolean isSend() {
+    private boolean isSend() {
         return send;
-    }
-
-    public void setSend(boolean send) {
-        this.send = send;
-        notifyPropertyChanged(BR.send);
-        if (send) {
-            notifyPropertyChanged(BR.receive);
-        }
     }
 
     @Bindable
@@ -98,11 +86,6 @@ public class SystemInfo extends BaseObservable implements Serializable {
     @Bindable
     public boolean isClear() {
         return clear;
-    }
-
-    public void setClear(boolean clear) {
-        this.clear = clear;
-        notifyPropertyChanged(BR.clear);
     }
 
     public void triggerClear() {

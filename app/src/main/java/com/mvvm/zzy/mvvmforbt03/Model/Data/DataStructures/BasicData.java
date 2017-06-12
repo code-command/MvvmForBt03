@@ -2,9 +2,6 @@ package com.mvvm.zzy.mvvmforbt03.Model.Data.DataStructures;
 
 import java.util.Queue;
 
-/**
- * Created by zhangziyu on 2017/6/11.
- */
 
 public abstract class BasicData {
 

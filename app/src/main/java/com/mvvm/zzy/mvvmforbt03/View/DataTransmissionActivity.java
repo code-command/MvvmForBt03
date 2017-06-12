@@ -16,6 +16,7 @@ import com.mvvm.zzy.mvvmforbt03.ViewModel.ButtonViewModel.ClearButtonViewModel;
 import com.mvvm.zzy.mvvmforbt03.ViewModel.ButtonViewModel.OnReceiveButtonListener;
 import com.mvvm.zzy.mvvmforbt03.ViewModel.ButtonViewModel.ReceiveButtonViewModel;
 import com.mvvm.zzy.mvvmforbt03.ViewModel.DataTransmission.DataReceiveService;
+import com.mvvm.zzy.mvvmforbt03.ViewModel.DataTransmission.OnGetDataListener;
 import com.mvvm.zzy.mvvmforbt03.databinding.ActivityDataTransmissionBinding;
 
 public class DataTransmissionActivity extends AppCompatActivity {
@@ -23,10 +24,9 @@ public class DataTransmissionActivity extends AppCompatActivity {
     String deviceAddr;
     ReceptionData receptionData;
     DataReceiveService.SwitchBinder switchBinder;
+    DataReceiveService dataReceiveService;
     ReceiveButtonViewModel receiveButtonViewModel;
     ClearButtonViewModel clearButtonViewModel;
-    DataReceiveService dataReceiveService;
-    private final String deviceUUID = "00001101-0000-1000-8000-00805F9B34FB";
 
     private Intent bindIntent;
     ActivityDataTransmissionBinding binding;
@@ -34,6 +34,14 @@ public class DataTransmissionActivity extends AppCompatActivity {
     ServiceConnection conn = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            switchBinder = (DataReceiveService.SwitchBinder) iBinder;
+            dataReceiveService = switchBinder.getService();
+            dataReceiveService.setOnGetDataListener(new OnGetDataListener() {
+                @Override
+                public void GetDataCollection(ReceptionData data) {
+
+                }
+            });
         }
 
         @Override
@@ -60,24 +68,25 @@ public class DataTransmissionActivity extends AppCompatActivity {
         receptionData = new ReceptionData();
         clearButtonViewModel = new ClearButtonViewModel(systemInfo);
         receiveButtonViewModel = new ReceiveButtonViewModel(systemInfo);
-        bindService();
+        createBindIntent();
         receiveButtonViewModel.setOnReceiveButtonListener(new OnReceiveButtonListener() {
             @Override
             public void startReceive() {
-                bindService(bindIntent, conn, Context.BIND_AUTO_CREATE);
+                DataTransmissionActivity.this.getApplicationContext().bindService(bindIntent, conn, Context.BIND_AUTO_CREATE);
             }
 
             @Override
             public void stopReceive() {
-                unbindService(conn);
+                DataTransmissionActivity.this.getApplicationContext().unbindService(conn);
             }
         });
     }
 
-    private void bindService() {
+    private void createBindIntent() {
         //绑定Service
         bindIntent = new Intent(DataTransmissionActivity.this, DataReceiveService.class);
         bindIntent.putExtra("deviceAddr", deviceAddr);
+        String deviceUUID = "00001101-0000-1000-8000-00805F9B34FB";
         bindIntent.putExtra("deviceUUID", deviceUUID);
         bindIntent.putExtra("systemInfo", systemInfo);
         bindIntent.putExtra("receiveData", receptionData);

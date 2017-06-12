@@ -1,9 +1,5 @@
 package com.mvvm.zzy.mvvmforbt03.Model.Adapters;
 
-/**
- * Created by Administrator on 2017/6/12 0012.
- */
-
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
@@ -13,10 +9,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import java.util.List;
-
-/**
- * Created by Administrator on 2017/6/9 0009.
- */
 
 public class DeviceListAdapter<T> extends BaseAdapter {
     private LayoutInflater inflater;

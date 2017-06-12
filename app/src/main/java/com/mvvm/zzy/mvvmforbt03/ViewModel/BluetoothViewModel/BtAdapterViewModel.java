@@ -6,9 +6,6 @@ import android.content.Intent;
 import com.mvvm.zzy.mvvmforbt03.Model.Adapters.DeviceListAdapter;
 import com.mvvm.zzy.mvvmforbt03.Model.Data.SystemInfo.SystemInfo;
 
-/**
- * Created by Administrator on 2017/6/6 0006.
- */
 
 public class BtAdapterViewModel {
     private BluetoothAdapter btAdapter;
