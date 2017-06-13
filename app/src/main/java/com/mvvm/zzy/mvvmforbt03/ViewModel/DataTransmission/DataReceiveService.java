@@ -29,7 +29,7 @@ public class DataReceiveService extends IntentService {
     private Queue<Byte> receiveQueue = new LinkedList<>();
     private ReceptionData receptionData;
 
-    private OnGetDataListener onGetDataListener;			//自定义回调接口
+    private OnGetDataListener onGetDataListener;            //自定义回调接口
 
     public class SwitchBinder extends Binder {
         public DataReceiveService getService() {
@@ -42,12 +42,16 @@ public class DataReceiveService extends IntentService {
         this.onGetDataListener = onGetDataListener;
     }
 
-    public DataReceiveService(String name) {
-        super(name);
+    public DataReceiveService() {
+        super("DataReceiveService");
     }
 
     @Override
     public IBinder onBind(Intent intent) {
+        systemInfo = (SystemInfo) intent.getSerializableExtra("systemInfo");
+        receptionData = (ReceptionData) intent.getSerializableExtra("receiveData");
+        String deviceAddr = intent.getStringExtra("deviceAddr");
+        btDevice = btAdapter.getRemoteDevice(deviceAddr);
         return switchBinder;
     }
 
@@ -58,16 +62,8 @@ public class DataReceiveService extends IntentService {
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        systemInfo = (SystemInfo)intent.getSerializableExtra("systemInfo");
-        receptionData = (ReceptionData)intent.getSerializableExtra("receiveData");
-        String deviceAddr = intent.getStringExtra("deviceAddr");
-        btDevice = btAdapter.getRemoteDevice(deviceAddr);
-        return super.onStartCommand(intent, flags, startId);
-    }
-
-    @Override
     protected void onHandleIntent(Intent intent) {
+        receptionData.updateCoreData("Test");
         final UUID deviceUUID = UUID.fromString(intent.getStringExtra("deviceUUID"));
         try {
             btSocket = btDevice.createInsecureRfcommSocketToServiceRecord(deviceUUID);
@@ -75,7 +71,7 @@ public class DataReceiveService extends IntentService {
             InputStream receiveStream = btSocket.getInputStream();
             while (systemInfo.isReceive()) {
                 int read = receiveStream.read(receiveBuffer);
-                if (read>0) {
+                if (read > 0) {
                     for (byte b : receiveBuffer) {
                         receiveQueue.offer(b);
                     }
@@ -85,7 +81,7 @@ public class DataReceiveService extends IntentService {
                     }
                 }
             }
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -93,7 +89,9 @@ public class DataReceiveService extends IntentService {
     @Override
     public boolean onUnbind(Intent intent) {
         try {
-            btSocket.close();
+            if (btSocket != null) {
+                btSocket.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

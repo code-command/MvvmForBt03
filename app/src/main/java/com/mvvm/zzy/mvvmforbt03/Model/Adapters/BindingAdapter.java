@@ -9,12 +9,15 @@ import com.mvvm.zzy.mvvmforbt03.R;
 
 public class BindingAdapter {
 
-    @android.databinding.BindingAdapter({"newReceiveData", "isReceiveing", "isClear"})
-    public static void updateReceiveText(TextView textView, String newData, boolean receive, boolean clear) {
+    @android.databinding.BindingAdapter("isClear")
+    public static void clearReceiveText(TextView textView, boolean clear) {
         if (clear) {
             textView.setText(R.string.empty);
-            return;
         }
+    }
+
+    @android.databinding.BindingAdapter({"newReceiveData", "isReceiveing"})
+    public static void updateReceiveText(TextView textView, String newData, boolean receive) {
         if (receive) {
             textView.append(newData);
         } else {

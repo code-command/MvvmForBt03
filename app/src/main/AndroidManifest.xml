@@ -20,6 +20,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".View.DataTransmissionActivity"></activity>
+        <service android:name=".ViewModel.DataTransmission.DataReceiveService">
+            <intent-filter>
+                <action android:name="com.mvvm.zzy.mvvmforbt03.ViewModel.DataTransmission.DataReceiveService"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

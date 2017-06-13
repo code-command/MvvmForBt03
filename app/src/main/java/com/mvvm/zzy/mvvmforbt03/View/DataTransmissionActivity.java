@@ -39,7 +39,6 @@ public class DataTransmissionActivity extends AppCompatActivity {
             dataReceiveService.setOnGetDataListener(new OnGetDataListener() {
                 @Override
                 public void GetDataCollection(ReceptionData data) {
-
                 }
             });
         }

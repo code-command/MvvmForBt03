@@ -91,7 +91,6 @@ public class SystemInfo extends BaseObservable implements Serializable {
     public void triggerClear() {
         this.clear = true;
         notifyPropertyChanged(BR.clear);
-        this.clear = false;
     }
 
     @Override

@@ -10,24 +10,30 @@ import java.util.Queue;
 
 
 public class ReceptionData extends BaseObservable implements Serializable {
-    private final String checkCode = "0x22";
-    private final String endCode = "0xdd";
+    private final String checkCode;
+    private final String endCode;
+    private final int checkLength;
+    private final int endLength;
+
+    {
+        endCode = "0xdd";
+        checkCode = "0x22";
+        checkLength = checkCode.length();
+        endLength = endCode.length();
+    }
+
     @Bindable
     private StringBuilder codeData = new StringBuilder();
 
-    public String getCheckCode() {
-        return null;
-    }
-
     public boolean checkCompleteData(Queue<Byte> resource) {
-        if (resource.contains(checkCode) || resource.contains(endCode))
+        if (resource.contains(checkCode) && resource.contains(endCode))
             return true;
         return true;
     }
 
     @Bindable
-    public String getCodeData() {
-        return codeData.toString();
+    public StringBuilder getCodeData() {
+        return codeData;
     }
 
     public void updateCoreData(String resource) {
@@ -37,15 +43,41 @@ public class ReceptionData extends BaseObservable implements Serializable {
     }
 
     public void interceptCoreData(Queue<Byte> resource) {
-        String newCodeData = "Test";
-        updateCoreData(newCodeData);
+        if (removeCheckCode(resource)) {
+            updateCoreData(getCoreData(resource));
+        }
     }
 
-    public int getDataLength() {
-        return 0;
+    private boolean removeCheckCode(Queue<Byte> resource) {
+        int checkIndex = 0;
+        byte tmpCheckByte = (byte) checkCode.charAt(checkIndex);
+        while (checkIndex<checkLength && !resource.isEmpty()) {
+            byte tmpByte = resource.poll();
+            if (tmpByte == tmpCheckByte) {
+                checkIndex++;
+                tmpCheckByte = (byte) checkCode.charAt(checkIndex);
+            }
+        }
+        if (checkIndex == checkLength) return true;
+        return false;
+    }
+
+    private String getCoreData(Queue<Byte> resource) {
+        StringBuilder resultBuilder = new StringBuilder();
+        while (!resource.isEmpty() && resultBuilder.length()<endLength) {
+            resultBuilder.append(resource.poll());
+        }
+        while (!resource.isEmpty()) {
+            int resultLength = resultBuilder.length();
+            if (resultBuilder.substring(resultLength-endLength, resultLength).equals(endCode)) {
+                return resultBuilder.substring(0, resultLength-endLength+1);
+            }
+            resultBuilder.append(resource.poll());
+        }
+        return null;
     }
 
     public String toShow() {
-        return codeData.toString();
+        return  getCodeData().toString();
     }
 }
