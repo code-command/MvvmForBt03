@@ -3,6 +3,9 @@ package com.mvvm.zzy.mvvmforbt03.Model.Data.DataStructures;
 import java.util.Queue;
 
 
+/**
+ * 暂时未启用
+ */
 public abstract class BasicData {
 
     public abstract String getCheckCode();

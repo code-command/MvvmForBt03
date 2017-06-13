@@ -8,7 +8,9 @@ import com.mvvm.zzy.mvvmforbt03.BR;
 import java.io.Serializable;
 import java.util.Queue;
 
-
+/**
+ * 接收数据格式类
+ */
 public class ReceptionData extends BaseObservable implements Serializable {
     private final String checkCode;
     private final String endCode;

@@ -4,6 +4,9 @@ import android.bluetooth.BluetoothDevice;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
+/**
+ * 蓝牙设备数据结构类
+ */
 public class BtDeviceItem extends BaseObservable {
     private String deviceName;
     private String deviceAddr;

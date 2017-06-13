@@ -14,7 +14,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by zhangziyu on 2017/6/7.
+ * List的单击与长按操作处理，实现：
+ * 1. 未配对设备单击与长按时都实现配对操作
+ * 2. 已配对设备单击时跳转到数据接收界面，长按时进行取消配对操作
  */
 
 public class ListItemViewModel implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener{

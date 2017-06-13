@@ -7,6 +7,10 @@ import com.mvvm.zzy.mvvmforbt03.BR;
 
 import java.io.Serializable;
 
+/**
+ * 用于表示当前操作状态类。
+ * 最好是采用单例模式，但是在实验中发现无法实现DataBinding，故采用此模式。
+ */
 public class SystemInfo extends BaseObservable implements Serializable {
     private boolean open;
     private boolean search;

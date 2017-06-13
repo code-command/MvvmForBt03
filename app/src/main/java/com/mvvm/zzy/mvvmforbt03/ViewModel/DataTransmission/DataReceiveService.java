@@ -18,6 +18,9 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.UUID;
 
+/**
+ * 数据接收时的Service，用来异步接收蓝牙设备传入的数据信息
+ */
 public class DataReceiveService extends IntentService {
 
     private BluetoothAdapter btAdapter;

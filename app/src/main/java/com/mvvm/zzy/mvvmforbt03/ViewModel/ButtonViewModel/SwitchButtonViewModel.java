@@ -4,7 +4,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.view.View;
 
 /**
- * Created by Administrator on 2017/6/9 0009.
+ * 控制设备蓝牙的开关操作
  */
 
 public class SwitchButtonViewModel extends ButtonViewModel {

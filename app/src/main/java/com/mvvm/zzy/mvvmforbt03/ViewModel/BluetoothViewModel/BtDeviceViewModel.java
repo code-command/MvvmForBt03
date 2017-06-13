@@ -8,7 +8,7 @@ import com.mvvm.zzy.mvvmforbt03.Model.Bluetooths.BtDeviceItem;
 import com.mvvm.zzy.mvvmforbt03.Model.Data.SystemInfo.SystemInfo;
 
 /**
- * Created by Administrator on 2017/6/8 0008.
+ * 蓝牙设备各种状态的处理
  */
 
 public class BtDeviceViewModel {

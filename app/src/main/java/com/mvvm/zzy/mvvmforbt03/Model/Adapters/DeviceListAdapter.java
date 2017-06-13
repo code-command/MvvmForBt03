@@ -10,6 +10,9 @@ import android.widget.BaseAdapter;
 
 import java.util.List;
 
+/**
+ * 用于ListView的实时显示数据
+ */
 public class DeviceListAdapter<T> extends BaseAdapter {
     private LayoutInflater inflater;
     private int layoutId;

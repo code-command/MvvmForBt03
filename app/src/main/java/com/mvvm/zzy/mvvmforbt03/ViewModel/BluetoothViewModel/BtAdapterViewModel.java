@@ -6,7 +6,9 @@ import android.content.Intent;
 import com.mvvm.zzy.mvvmforbt03.Model.Adapters.DeviceListAdapter;
 import com.mvvm.zzy.mvvmforbt03.Model.Data.SystemInfo.SystemInfo;
 
-
+/**
+ * 蓝牙设备各种状态的处理
+ */
 public class BtAdapterViewModel {
     private BluetoothAdapter btAdapter;
     private SystemInfo systemInfo;

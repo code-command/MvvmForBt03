@@ -9,6 +9,9 @@ import com.mvvm.zzy.mvvmforbt03.R;
 
 public class BindingAdapter {
 
+    /**
+     * 用于实现数据接收时显示的清除
+     */
     @android.databinding.BindingAdapter("isClear")
     public static void clearReceiveText(TextView textView, boolean clear) {
         if (clear) {
@@ -16,6 +19,9 @@ public class BindingAdapter {
         }
     }
 
+    /**
+     * 用于实现数据接收时切换接收按钮
+     */
     @android.databinding.BindingAdapter({"newReceiveData", "isReceiveing"})
     public static void updateReceiveText(TextView textView, String newData, boolean receive) {
         if (receive) {
@@ -25,6 +31,9 @@ public class BindingAdapter {
         }
     }
 
+    /**
+     * 用于实现开关蓝牙时界面的变换
+     */
     @android.databinding.BindingAdapter("btLinearLayoutHandover")
     public static void setLinearLayoutHandover(LinearLayout view, boolean found) {
         RelativeLayout.LayoutParams paramsr = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);

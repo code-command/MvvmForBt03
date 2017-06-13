@@ -4,7 +4,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.view.View;
 
 /**
- * Created by Administrator on 2017/6/9 0009.
+ * 搜索按钮的单击相应，主要通过更改BluetoothAdapter的扫描状态
  */
 
 public class SearchButtonViewModel extends ButtonViewModel {
